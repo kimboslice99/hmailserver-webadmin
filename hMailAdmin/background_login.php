@@ -37,6 +37,7 @@ function Login($username, $password) {
 function LoginError() {
 	global $hmail_config;
 	header("refresh:0; url=" . $hmail_config['rooturl'] . "index.php?page=login&error=1");
+	file_put_contents('./include/log.txt', date("m/d/y H:i:s") . ' Login failed '.$_SERVER['REMOTE_ADDR']."\n", LOCK_EX|FILE_APPEND);
 	exit();
 }
 
