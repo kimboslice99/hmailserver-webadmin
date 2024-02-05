@@ -165,6 +165,10 @@ return array(
 	154 => 'Summary',
 	154 => 'Policy Type',
 	155 => 'Policy Domain',
+	156 => 'Sending MTA IP',
+	157 => 'Receiving IP',
+	158 => 'Receiving MX Hostname',
+	159 => 'Failed Session Count',
 
 	200 => 'Confirm delete',
 );
