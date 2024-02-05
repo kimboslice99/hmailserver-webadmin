@@ -172,6 +172,7 @@ return array(
 	160 => 'Failed Session Count',
 	161 => 'Additional Information',
 	162 => 'Failure Reason Code',
+	163 => 'TLS Reports',
 
 	200 => 'Confirm delete',
 );

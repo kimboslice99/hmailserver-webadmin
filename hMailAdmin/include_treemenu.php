@@ -183,7 +183,7 @@ for ($i = 1; $i <= $TotalDomains; $i++) {
           <a href="?page=dmarcreports"><?php EchoTranslation("DMARC reports") ?></a>
         </li>
         <li class="tls <?php if ($page=='hm_tlsreports') echo 'active' ?>">
-          <a href="?page=tlsreports">TLS Reports</a>
+          <a href="?page=tlsreports"><?php EchoTranslation("TLS Reports") ?></a>
         </li>
         <li class="label"><?php EchoTranslation("Action") ?></li>
 <?php
