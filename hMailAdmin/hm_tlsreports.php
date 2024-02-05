@@ -169,7 +169,6 @@ table.tls tbody tr:nth-child(2n) {background: #eaeaea}
 table.tls tbody tr:hover {background: #f2f2f2}
 .tls table {margin:15px 0}
 div.tls {overflow-x:auto}
-}
 </style>
     <div class="box large">
       <h2><?php EchoTranslation("TLS reports") ?> <span>(<?php echo $reports_count ?>)</span></h2>
@@ -204,8 +203,7 @@ div.tls {overflow-x:auto}
         </table>
         <h4><?php EchoTranslation("Policy Details") ?></h4>
         <table>
-        <?php foreach( $report['policies'] as $policy){ ?>
-          <tr>
+        <?php foreach( $report['policies'] as $policy){ ?><tr>
             <th><?php EchoTranslation('Policy Type') ?></th>
             <td><?= $policy['policy']['policy-type'] ?></td>
             <th><?php EchoTranslation('Policy') ?></th>
@@ -213,9 +211,9 @@ div.tls {overflow-x:auto}
           </tr>
           <tr>
             <th><?php EchoTranslation('Policy Domain') ?></th>
-            <td><?= $policy['policy']['policy-domain'] ?></td>
+            <td><?php if(!empty($policy['policy']['policy-domain'])) print $policy['policy']['policy-domain'] ?></td>
             <th><?php EchoTranslation('MX Hosts') ?></th>
-            <td><?= implode(', ', $policy['policy']['mx-host']) ?></td>
+            <td><?php if(!empty($policy['policy']['mx-host'])) print implode(', ', $policy['policy']['mx-host']) ?></td>
           </tr>
         </table>
         <h4><?php EchoTranslation('Summary') ?></h4>
@@ -228,7 +226,6 @@ div.tls {overflow-x:auto}
           </tr>
         </table>
         <?php } ?>
-          
 <?php
 
     }
