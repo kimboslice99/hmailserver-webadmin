@@ -201,9 +201,9 @@ div.tls {overflow-x:auto}
             <td><?= $report['contact-info'] ?></td>
           </tr>
         </table>
+        <?php foreach( $report['policies'] as $policy){ ?><tr>
         <h4><?php EchoTranslation("Policy Details") ?></h4>
         <table>
-        <?php foreach( $report['policies'] as $policy){ ?><tr>
             <th><?php EchoTranslation('Policy Type') ?></th>
             <td><?= $policy['policy']['policy-type'] ?></td>
             <th><?php EchoTranslation('Policy') ?></th>
@@ -211,9 +211,9 @@ div.tls {overflow-x:auto}
           </tr>
           <tr>
             <th><?php EchoTranslation('Policy Domain') ?></th>
-            <td><?php if(!empty($policy['policy']['policy-domain'])) print $policy['policy']['policy-domain'] ?></td>
+            <td><?php if(isset($policy['policy']['policy-domain'])) print $policy['policy']['policy-domain'] ?></td>
             <th><?php EchoTranslation('MX Hosts') ?></th>
-            <td><?php if(!empty($policy['policy']['mx-host'])) print implode(', ', $policy['policy']['mx-host']) ?></td>
+            <td><?php if(isset($policy['policy']['mx-host'])) print implode(', ', $policy['policy']['mx-host']) ?></td>
           </tr>
         </table>
         <h4><?php EchoTranslation('Summary') ?></h4>
@@ -225,7 +225,28 @@ div.tls {overflow-x:auto}
             <td><?= $policy['summary']['total-failure-session-count'] ?></td>
           </tr>
         </table>
-        <?php } ?>
+	<?php if(isset($policy['failure-details'])) { ?>
+		<h4><?php EchoTranslation('Failure Details') ?></h4>
+			<table>
+		<?php foreach( $policy['failure-details'] as $failuredetail ) { ?>
+			  <tr>
+				<th><?php EchoTranslation('Result') ?></th>
+				<td><?= $failuredetail['result-type'] ?></td>
+				<th><?php EchoTranslation('Sending MTA IP') ?></th>
+				<td><?= $failuredetail['sending-mta-ip'] ?></td>
+				<th><?php EchoTranslation('Receiving IP') ?></th>
+				<td><?= $failuredetail['receiving-ip'] ?></td>
+			  </tr>
+			  <tr>
+				<th><?php EchoTranslation('Receiving MX Hostname') ?></th>
+				<td><?= $failuredetail['receiving-mx-hostname'] ?></td>
+				<th><?php EchoTranslation('Failed Session Count') ?></th>
+				<td><?= $failuredetail['failed-session-count'] ?></td>
+			  </tr>
+			<?php } ?>
+		</table>
+		<?php } ?>
+    <?php } ?>
 		</div>
 <?php
 
