@@ -222,32 +222,38 @@ div.tls {overflow-x:auto}
             <th><?php EchoTranslation('Total Successful Session Count') ?></th>
             <td><?= $policy['summary']['total-successful-session-count'] ?></td>
             <th><?php EchoTranslation('Total Failure Session Count') ?></th>
-            <td><?= $policy['summary']['total-failure-session-count'] ?></td>
+            <td style="width:21%" class="<?= $policy['summary']['total-failure-session-count'] > 0 ? 'unaligned' : 'aligned'; ?>"><?= $policy['summary']['total-failure-session-count'] ?></td>
           </tr>
         </table>
-	<?php if(isset($policy['failure-details'])) { ?>
-		<h4><?php EchoTranslation('Failure Details') ?></h4>
-			<table>
-		<?php foreach( $policy['failure-details'] as $failuredetail ) { ?>
-			  <tr>
-				<th><?php EchoTranslation('Result') ?></th>
-				<td><?= $failuredetail['result-type'] ?></td>
-				<th><?php EchoTranslation('Sending MTA IP') ?></th>
-				<td><?= $failuredetail['sending-mta-ip'] ?></td>
-				<th><?php EchoTranslation('Receiving IP') ?></th>
-				<td><?= $failuredetail['receiving-ip'] ?></td>
-			  </tr>
-			  <tr>
-				<th><?php EchoTranslation('Receiving MX Hostname') ?></th>
-				<td><?= $failuredetail['receiving-mx-hostname'] ?></td>
-				<th><?php EchoTranslation('Failed Session Count') ?></th>
-				<td><?= $failuredetail['failed-session-count'] ?></td>
-			  </tr>
-			<?php } ?>
-		</table>
-		<?php } ?>
+    <?php if(isset($policy['failure-details'])) { ?>
+        <h4><?php EchoTranslation('Failure Details') ?></h4>
+            <table>
+        <?php foreach( $policy['failure-details'] as $failuredetail ) { ?>
+              <tr>
+                <th><?php EchoTranslation('Result') ?></th>
+                <td><?= isset($failuredetail['result-type'])?$failuredetail['result-type']:'N/A'; ?></td>
+                <th><?php EchoTranslation('Sending MTA IP') ?></th>
+                <td><?= isset($failuredetail['sending-mta-ip'])?$failuredetail['sending-mta-ip']:'N/A'; ?></td>
+                <th><?php EchoTranslation('Additional Information') ?></th>
+                <td><?= isset($failuredetail['additional-information'])? $failuredetail['additional-information'] :'N/A'; ?></td>
+                <th><?php EchoTranslation('Failure Reason Code') ?></th>
+                <td><?= isset($failuredetail['failure-reason-code'])? $failuredetail['failure-reason-code'] :'N/A'; ?></td>
+              </tr>
+              <tr>
+                <th><?php EchoTranslation('Receiving IP') ?></th>
+                <td><?= isset($failuredetail['receiving-ip'])? $failuredetail['receiving-ip'] :'N/A'; ?></td>
+                <th><?php EchoTranslation('Receiving MX Hostname') ?></th>
+                <td><?= isset($failuredetail['receiving-mx-hostname'])? $failuredetail['receiving-mx-hostname'] :'N/A';?></td>
+                <th><?php EchoTranslation('Receiving MX HELO') ?></th>
+                <td><?= isset($failuredetail['receiving-mx-helo'])? $failuredetail['receiving-mx-hostname'] :'N/A';?></td>
+                <th><?php EchoTranslation('Failed Session Count') ?></th>
+                <td><?= isset($failuredetail['failed-session-count'])? $failuredetail['failed-session-count']:'N/A'; ?></td>
+              </tr>
+            <?php } ?>
+        </table>
+        <?php } ?>
     <?php } ?>
-		</div>
+        </div>
 <?php
 
     }

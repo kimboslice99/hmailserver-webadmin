@@ -168,7 +168,10 @@ return array(
 	156 => 'Sending MTA IP',
 	157 => 'Receiving IP',
 	158 => 'Receiving MX Hostname',
-	159 => 'Failed Session Count',
+	159 => 'Receiving MX HELO',
+	160 => 'Failed Session Count',
+	161 => 'Additional Information',
+	162 => 'Failure Reason Code',
 
 	200 => 'Confirm delete',
 );
