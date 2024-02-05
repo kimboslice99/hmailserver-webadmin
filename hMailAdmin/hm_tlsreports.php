@@ -218,7 +218,6 @@ div.tls {overflow-x:auto}
             <td><?= implode(', ', $policy['policy']['mx-host']) ?></td>
           </tr>
         </table>
-        <?php } ?>
         <h4><?php EchoTranslation('Summary') ?></h4>
         <table class="tls">
           <tr>
@@ -228,6 +227,7 @@ div.tls {overflow-x:auto}
             <td><?= $policy['summary']['total-failure-session-count'] ?></td>
           </tr>
         </table>
+        <?php } ?>
           
 <?php
 
