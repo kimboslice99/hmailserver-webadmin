@@ -226,6 +226,7 @@ div.tls {overflow-x:auto}
           </tr>
         </table>
         <?php } ?>
+		</div>
 <?php
 
     }
