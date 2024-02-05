@@ -225,8 +225,8 @@ div.tls {overflow-x:auto}
             <td style="width:21%" class="<?= $policy['summary']['total-failure-session-count'] > 0 ? 'unaligned' : 'aligned'; ?>"><?= $policy['summary']['total-failure-session-count'] ?></td>
           </tr>
         </table>
-    <?php if(isset($policy['failure-details'])) { ?>
         <h4><?php EchoTranslation('Failure Details') ?></h4>
+    <?php if(isset($policy['failure-details'])) { ?>
             <table>
         <?php foreach( $policy['failure-details'] as $failuredetail ) { ?>
               <tr>
