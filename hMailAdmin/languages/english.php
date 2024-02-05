@@ -157,6 +157,14 @@ return array(
 	148 => 'DMARC reports are not enabled in config.php',
 	
 	149 => 'You haven\'t added any greylisting white addresses',
+	
+	150 => 'Delete TLS report',
+	151 => 'TLS Report Details',
+	152 => 'Total Successful Session Count',
+	153 => 'Total Failure Session Count',
+	154 => 'Summary',
+	154 => 'Policy Type',
+	155 => 'Policy Domain',
 
 	200 => 'Confirm delete',
 );

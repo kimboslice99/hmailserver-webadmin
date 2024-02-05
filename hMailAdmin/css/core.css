@@ -190,6 +190,7 @@ nav {display:none;}
 #sidebar ul li.user > a::before {background-position:-192px 0;}
 #sidebar ul li.webmail > a::before {background-position:-208px 0;}
 #sidebar ul li.dmarc > a::before {background-position:-224px 0;}
+#sidebar ul li.tls > a::before {background-position:-240px 0; background:url('icons.svg') no-repeat -224px 0;}
 #sidebar .label {display:block; padding:8px 5%; text-transform:uppercase; font-size:10px; font-weight:700; color:#646a6f; letter-spacing:.1em; margin:24px 0 0 0;}
 #sidebar .label:first-child {margin-top:12px;}
 #sidebar .action-btn {margin:8px 5%;}

@@ -167,4 +167,21 @@ $hmail_config['dmarc_port'] = 993;
 */
 
 $hmail_config['dmarc_encryption'] = 'ssl';
+
+/*
+    tls reporting
+*/
+
+$hmail_config['tlsreport_enable'] = false;
+
+$hmail_config['tlsreport_username'] = '';
+
+$hmail_config['tlsreport_password'] = '';
+
+$hmail_config['tlsreport_port'] = 993;
+
+$hmail_config['tlsreport_hostip'] = '127.0.0.1';
+
+$hmail_config['tlsreport_encryption'] = 'ssl';
+
 ?>
