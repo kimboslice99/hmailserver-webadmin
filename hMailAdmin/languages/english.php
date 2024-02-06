@@ -160,8 +160,8 @@ return array(
 	
 	150 => 'Delete TLS report',
 	151 => 'TLS Report Details',
-	152 => 'Total Successful Session Count',
-	153 => 'Total Failure Session Count',
+	152 => 'Total Successful Sessions',
+	153 => 'Total Failed Sessions',
 	154 => 'Summary',
 	154 => 'Policy Type',
 	155 => 'Policy Domain',

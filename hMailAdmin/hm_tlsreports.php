@@ -93,9 +93,7 @@ function save_json_attachment($inbox, $email_number, $part, $index, $folder) {
         if (!is_dir($folder))
             mkdir($folder);
 
-        // Assuming the attachment is already a JSON file
         $filename = str_replace('.gz', '', $filename); // Remove .gz extension if present
-        $filename = str_replace('.json.gz', '.json', $filename);
         if ($data = gzdecode($data)) {
             file_put_contents($folder . '/' . $filename, $data);
         }
@@ -148,18 +146,20 @@ $(document).ready(function(){
     if($('a.toggle').length){
         $('a.toggle').on('click', function() {
             var id = $(this).attr('id');
+            console.log('Toggle Clicked:', id);
             var sign = $(this).text();
             if(sign == '+'){
-                $('#' + id + '-d').show().find('div.hidden').slideDown(150);
+                $('#' + id + '-t').show().find('table.hidden').slideDown(150);
                 $(this).text('-');
             } else {
-                $('#' + id + '-d').find('div.hidden').slideUp(150,function(){$('#' + id + '-d').hide()});
+                $('#' + id + '-t').hide().find('table.hidden').slideUp(150);
                 $(this).text('+');
             }
             return false;
         })
     }
 });
+
 </script>
 <style>
 td.aligned {background-color:#9f9; padding-left:5px;}
@@ -201,12 +201,33 @@ div.tls {overflow-x:auto}
             <td><?= $report['contact-info'] ?></td>
           </tr>
         </table>
-        <?php foreach( $report['policies'] as $policy){ ?><tr>
-        <h4><?php EchoTranslation("Policy Details") ?></h4>
-        <table>
+        <?php foreach( $report['policies'] as $policy){
+                if(isset($policy['summary']['total-successful-session-count'], $policy['summary']['total-failure-session-count'])){
+                    $successfulSessions = $policy['summary']['total-successful-session-count'];
+                    $failedSessions = $policy['summary']['total-failure-session-count'];
+                    $percentageSuccessful = round(($successfulSessions / ($successfulSessions + $failedSessions)) * 100, 1);
+                    $percentageFailed = round(($failedSessions / ($failedSessions + $successfulSessions)) * 100, 1);
+                } else {
+                    $failedSessions = 0;
+                    $successfulSessions = 0;
+                }
+            ?>
+        <h4><?php EchoTranslation('Summary') ?></h4>
+        <table class="tls">
+          <tr>
+            <th><?php EchoTranslation('Total Successful Sessions') ?></th>
+            <td style="width:21%" class="<?= $successfulSessions > 0 ? 'aligned' : 'unaligned'; ?>"><?= $successfulSessions . ' - ' . $percentageSuccessful . '%' ?></td>
+            <th><?php EchoTranslation('Total Failed Sessions') ?></th>
+            <td style="width:21%" class="<?= $failedSessions > 0 ? 'unaligned' : 'aligned'; ?>"><?= $failedSessions . ' - ' . $percentageFailed . '%' ?></td>
+          </tr>
+        </table>
+        <h4><?php EchoTranslation("Policy Details") ?> <a href="#" class="toggle" id="dm<?= $id ?>">+</a></h4><br>
+        <table class="hidden" id="dm<?= $id ?>-t">
+          <tr>
             <th><?php EchoTranslation('Policy Type') ?></th>
             <td><?= $policy['policy']['policy-type'] ?></td>
             <th><?php EchoTranslation('Policy') ?></th>
+            <!-- policy-string is an array of strings, interesting name choice -->
             <td><?= implode(', ', $policy['policy']['policy-string']) ?></td>
           </tr>
           <tr>
@@ -216,18 +237,11 @@ div.tls {overflow-x:auto}
             <td><?php if(isset($policy['policy']['mx-host'])) print implode(', ', $policy['policy']['mx-host']) ?></td>
           </tr>
         </table>
-        <h4><?php EchoTranslation('Summary') ?></h4>
-        <table class="tls">
-          <tr>
-            <th><?php EchoTranslation('Total Successful Session Count') ?></th>
-            <td><?= $policy['summary']['total-successful-session-count'] ?></td>
-            <th><?php EchoTranslation('Total Failure Session Count') ?></th>
-            <td style="width:21%" class="<?= $policy['summary']['total-failure-session-count'] > 0 ? 'unaligned' : 'aligned'; ?>"><?= $policy['summary']['total-failure-session-count'] ?></td>
-          </tr>
-        </table>
-        <h4><?php EchoTranslation('Failure Details') ?></h4>
-    <?php if(isset($policy['failure-details'])) { ?>
-            <table>
+    <?php if(isset($policy['failure-details'])) {
+            $id++;
+        ?>
+        <h4><?php EchoTranslation('Failure Details') ?> <a href="#" class="toggle" id="dm<?= $id ?>">+</a></h4><br>
+            <table class="hidden" id="dm<?= $id ?>-t">
         <?php foreach( $policy['failure-details'] as $failuredetail ) { ?>
               <tr>
                 <th><?php EchoTranslation('Result') ?></th>
@@ -249,12 +263,17 @@ div.tls {overflow-x:auto}
                 <th><?php EchoTranslation('Failed Session Count') ?></th>
                 <td><?= isset($failuredetail['failed-session-count'])? $failuredetail['failed-session-count']:'N/A'; ?></td>
               </tr>
-            <?php } ?>
+            <?php
+                $id++;
+                }
+            ?>
         </table>
-        <?php } ?>
-    <?php } ?>
+        <?php
+            }
+        $id++;
+        }
+    ?>
         </div>
 <?php
-
     }
 ?>
