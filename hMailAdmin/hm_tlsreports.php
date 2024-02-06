@@ -183,7 +183,7 @@ div.tls {overflow-x:auto}
     }
     $id = 0;
     foreach( $reports as $report ) {
-        echo '<h3><a href="#">'.$report['domain'].' &#8211; '.$report['org'].' &#8211; '.$report['date-range']['date-begin'].'</a></h3>';
+        echo '<h3><a href="#">'.$report['domain'].' &#8211; '.$report['org'].' &#8211; '.date('Y-m-d', strtotime($report['date-range']['date-begin'])).'</a></h3>';
 ?>
       <div class="hidden tls">
         <div class="buttons"><a class="button" href="#" onclick="return Confirm('<?php EchoTranslation("Confirm delete") ?> <b><?php EchoTranslation("TLS report") ?></b>','<?php EchoTranslation("Yes") ?>','<?php EchoTranslation("No") ?>','?page=background_tlsreports&tls=<?php echo $report['filename'] ?>&csrftoken=<?php echo $csrftoken ?>');"><?php EchoTranslation("Delete TLS report") ?></a></div>
@@ -197,7 +197,7 @@ div.tls {overflow-x:auto}
           </tr>
           <tr>
             <th><?php EchoTranslation("Coverage") ?>:</th>
-            <td><?= $report['date-range']['date-begin'] ?> - <?php echo $report['date-range']['date-end'] ?></td>
+            <td><?= date('Y-m-d H:i:s', strtotime($report['date-range']['date-begin'])) ?> - <?= date('Y-m-d H:i:s', strtotime($report['date-range']['date-end'])) ?></td>
             <th><?php EchoTranslation("Extra contact") ?>:</th>
             <td><?= $report['contact-info'] ?></td>
           </tr>
