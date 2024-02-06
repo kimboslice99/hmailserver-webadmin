@@ -129,6 +129,7 @@ function parse($files){
         $out[] = array(
             'filename' => $file,
             'org' => $data['organization-name'],
+            'domain' => explode('!', $file)[1], // this shouldnt be an issue if the report name is constructed as recommended in the RFC
             'date-range' => array(
                 'date-begin' => $data['date-range']['start-datetime'],
                 'date-end' => $data['date-range']['end-datetime'],
@@ -182,7 +183,7 @@ div.tls {overflow-x:auto}
     }
     $id = 0;
     foreach( $reports as $report ) {
-        echo '<h3><a href="#">'.$report['org'].' &#8211; '.$report['date-range']['date-begin'].'</a></h3>';
+        echo '<h3><a href="#">'.$report['domain'].' &#8211; '.$report['org'].' &#8211; '.$report['date-range']['date-begin'].'</a></h3>';
 ?>
       <div class="hidden tls">
         <div class="buttons"><a class="button" href="#" onclick="return Confirm('<?php EchoTranslation("Confirm delete") ?> <b><?php EchoTranslation("TLS report") ?></b>','<?php EchoTranslation("Yes") ?>','<?php EchoTranslation("No") ?>','?page=background_tlsreports&tls=<?php echo $report['filename'] ?>&csrftoken=<?php echo $csrftoken ?>');"><?php EchoTranslation("Delete TLS report") ?></a></div>
