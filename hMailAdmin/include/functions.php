@@ -337,11 +337,11 @@ function Translate($string) {
 // IP 2 Country
 function GeoIp($ip) {
 	global $obLanguage;
-	if ($ip === '0.0.0.0') return Translate('Unknown');
-	$regex = '/(127\.0\.0\.1)|^(10\.)|^(192\.168\.)|^(169\.254\.)|^(172\.(1[6-9]|2[0-9]|3[0-1]))/';
+	if ($ip === '0.0.0.0' || $ip === "::") return Translate('Unknown');
+	$regex = '/(127\.0\.0\.1)|^(::1)$|^(10\.)|^(192\.168\.)|^(169\.254\.)|^(172\.(1[6-9]|2[0-9]|3[0-1]))/';
 	if (preg_match($regex, $ip)) return Translate('Local IP range');
 
-	$json = file_get_contents('https://extreme-ip-lookup.com/json/' . $ip);
+	$json = file_get_contents('http://ip-api.com/json/' . $ip);
 	$parsed = json_decode($json);
 
 	if(!$parsed->countryCode) return Translate('Unknown');
