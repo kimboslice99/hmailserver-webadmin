@@ -217,9 +217,9 @@ div.tls {overflow-x:auto}
         <table class="tls">
           <tr>
             <th><?php EchoTranslation('Total Successful Sessions') ?></th>
-            <td style="width:21%" class="<?= $successfulSessions > 0 ? 'aligned' : 'unaligned'; ?>"><?= $successfulSessions . ' - ' . $percentageSuccessful . '%' ?></td>
+            <td style="width:10%" class="<?= $successfulSessions > 0 ? 'aligned' : 'unaligned'; ?>"><?= $successfulSessions . ' - ' . $percentageSuccessful . '%' ?></td>
             <th><?php EchoTranslation('Total Failed Sessions') ?></th>
-            <td style="width:21%" class="<?= $failedSessions > 0 ? 'unaligned' : 'aligned'; ?>"><?= $failedSessions . ' - ' . $percentageFailed . '%' ?></td>
+            <td style="width:10%" class="<?= $failedSessions > 0 ? 'unaligned' : 'aligned'; ?>"><?= $failedSessions . ' - ' . $percentageFailed . '%' ?></td>
           </tr>
         </table>
         <h4><?php EchoTranslation("Policy Details") ?> <a href="#" class="toggle" id="dm<?= $id ?>">+</a></h4><br>
