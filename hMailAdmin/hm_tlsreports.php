@@ -139,6 +139,11 @@ function parse($files){
             'policies' => $data['policies']
         );
     }
+    	// Sort by date, newest first.
+	usort($out, function($a, $b) {
+		return strtotime($b['date-range']['date-begin']) - strtotime($a['date-range']['date-begin']);
+	});
+    
     return $out;
 }
 //print_r( $reports );
