@@ -44,7 +44,7 @@ html {box-sizing:border-box;box-shadow:inset 0 0 100px rgb(0 0 0 / 80%);min-heig
 *, *:before, *:after {box-sizing:inherit;}
 
 /* global */
-body {font-family:'Nunito Sans',sans-serif; font-size:13px; color:#fff; background:#08227b;}
+body {font-family:'Nunito Sans',sans-serif; font-size:13px; color:#3e454c; background:#08227b;}
 div {position:relative;}
 a {color:#1784c7;}
 .center {text-align:center;}
