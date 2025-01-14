@@ -7,7 +7,8 @@ if (hmailGetAdminLevel() != 2)
 
 if (empty($hmail_config['tlsreport_enable'])) exit('<div class="box large"><h2>' . Translate("TLS reports") . '</h2><p class="warning" style="margin-top:18px;">' . Translate("TLS reports are not enabled in config.php") . '</p></div>') . PHP_EOL;
 
-$folder = './logs/tls';
+$folder = './logs/tls/';
+$message = "";
 
 function get_reports($folder) {
 	global $hmail_config;
