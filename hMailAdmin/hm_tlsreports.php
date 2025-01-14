@@ -114,7 +114,7 @@ function save_json_attachment($inbox, $email_number, $part, $index, $folder) {
 
 
 /* Search directory for reports. */
-$new_report_count = get_reports();
+$new_report_count = get_reports($folder);
 $files = glob($folder . '*.json');
 $reports_count = count($files);
 if (!empty($files)) $reports = parse($files);
