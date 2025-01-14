@@ -3,19 +3,20 @@ hMailAdmin: an hMailServer PHPWebAdmin redesign project
 
 I was delighted when first started using hMailServer on my Windows 2016 server (replaced SmarterMail) but web-interface was punch in the eye so I decided to redesign it. The new layout is fully responsive and free to use/download.
 
-![](https://i.imgur.com/vwgbXJH.png)
+![hmailadmin-v1 7](https://github.com/user-attachments/assets/19ef5ab2-b70c-4e16-a52b-98996f09d898)
 
 Features
 -----
 - modern look and feel
 - responsive layout for desktop and mobile browsers
 - dashboard graphs refresh with live data
-- ability to view source of queued messages
+- ability to view source or delete queued messages
 - confirmation dialogs in modal
-- form validation
+- form validations
 - table sorting
 - log parser
 - blacklist check
+- prevent too many login attempts
 - based on original PHPWebAdmin
 - works with latest hMailServer (stable) version
 - continuous development
@@ -26,30 +27,62 @@ Don't worry, hMailAdmin will stay free - but I do need your support in order to 
 
 [![PayPal donate button](https://www.paypalobjects.com/webstatic/en_US/btn/btn_donate_pp_142x27.png)](https://www.paypal.me/MatijaMatecic/10EUR)
 
-How to use
+Installation
 -----
-If you HAVE PHPWebAdmin installed:
+If you already **HAVE** PHPWebAdmin installed:
 
-1\. Extract "hMailAdmin" folder in the same root as "PHPWebAdmin" folder (which you can delete) and make changes to config-dist.php accordingly, then rename to config.php
+1\. Extract "/hMailAdmin/" folder in the same root as "/PHPWebAdmin/" (which you can delete), make changes to config-dist.php accordingly and rename it to config.php
 
-2\. Access web admin interface from browser (eg. http://www.yourdomain.com/hmailadmin/) and sign in with hMailServer credentials
+2\. Access web admin interface from browser (eg. https://www.yourdomain.com/hmailadmin/) and sign in with hMailServer credentials
 
-If you DON'T HAVE PHPWebAdmin installed:
+OR
 
-1\. Extract "hMailAdmin" folder in the root of any of your websites (or create new website for it) and make changes to config-dist.php accordingly, then rename to config.php
+If you **DON'T HAVE** PHPWebAdmin installed:
 
-2\. On IIS enable php_com_dotnet.dll in PHP
+1\. Extract "/hMailAdmin/" folder in the root of any of your websites (or create new website for it), make changes to config-dist.php accordingly and rename it to config.php
 
-3\. In php.ini set register_globals=off and display_errors=off
+2\. Modify php.ini (or simply use [PHP Manager for IIS](https://github.com/phpmanager/phpmanager)) with:
+```
+register_globals = off
+display_errors = off
+
+[PHP_COM_DOTNET]
+extension = php_com_dotnet.dll
+```
 
 4\. On IIS give the service account access to the hMailServer COM library: https://www.hmailserver.com/documentation/latest/?page=howto_dcom_permissions
 
-5\. Access web admin interface from browser (eg. http://www.yourdomain.com/hmailadmin/) and sign in with hMailServer credentials
+5\. Access web admin interface from browser (eg. https://www.yourdomain.com/hmailadmin/) and sign in with hMailServer credentials
 
 Common issues: https://www.hmailserver.com/documentation/latest/?page=ts_setup_phpwebadmin
 
 Changelog
 -----
+Version 1.8 (2024-10-21)
+- [fix] date formatting on different locales
+- [tweak] added Translate() into PrintPropertyRow function
+- [new] check for and prevent too many failed login attempts
+- [new] added TLS reports from @kimboslice99
+- [fix] Check syntax and Reload scripts didn't work
+- [tweak] hides DMARC and/or TLS reports from navigation if not enabled in config.php
+- [tweak] redesigned DMARC reports
+- [new] automatically creates "logs" folder and subfolders
+- [fix] CSS ::after fix
+
+Version 1.7 (2024-10-18)
+- [tweak] UI refresh (better navigation on desktop/tablet/mobile, new login, new icons)
+- [new] notices with warnings
+- [new] added Protocols and Greylisting White listing pages
+- [new] possible to delete message from Delivery queue
+- [tweak] breadcrumbs repositioned to header nav
+- [fix] various JavaScript fixes and optimizations
+
+Version 1.6 (2024-10-15)
+- [new] added breadcrumbs to several pages (Alias, External accounts, Rules, IMAP folders)
+- [tweak] merged some pull requests from @RvdHout
+- [fix] new IP to Country API (shows flags in IP Ranges)
+- [fix] part of navigation on mobile UI wasn't clickable
+
 Version 1.5 (2018-08-22)
 - [tweak] changes to config.php
 - [tweak] Server graph on dashboard displays delivery queue count
@@ -186,8 +219,8 @@ Version 0.9 beta (2016-12-28)
 - [autosize](https://github.com/jackmoore/autosize)
 - [timeago](http://timeago.yarp.com/timeago)
 - [Chartist](https://gionkunz.github.io/chartist-js/Chartist)
-- [CodyHouse Responsive Sidebar Navigation](https://codyhouse.co/gem/responsive-sidebar-navigation/)
-- [Open Iconic](https://useiconic.com/open/)
+- [jBox](https://github.com/StephanWagner/jBox)
+- [Feather](https://feathericons.com/)
 
 Questions and contributions
 -----
@@ -203,6 +236,6 @@ Andreas Tunberg and other contributors who make developing easier.
 
 Copyright?
 -----
-Author: [Matija Matečić](http://www.matecic.com)
+Author: [Matija Matečić](https://matija.matecic.com)
 
 Released under [CC BY-SA 4.0 license](https://creativecommons.org/licenses/by-sa/4.0/) (use it freely in personal/commercial project but don't resell, provided "as-is")

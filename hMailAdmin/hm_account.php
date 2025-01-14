@@ -123,8 +123,13 @@ if ($AccountId > 0) {
 		elseif ($Width >= 70) $Color = "#ffb565";
 		elseif ($Width < 1) $Width = 1;
 
-		echo '          <div style="margin:-14px 0 18px 0; width:100%; height:13px; background:#f2f2f2; border-radius:2px;"><div style="width:' . $Width . '%; height:100%; background:' . $Color . '; border-radius:2px;"></div></div>';
+		echo '          <div style="margin:-14px 0 18px 0; width:100%; height:13px; background:#f2f2f2; border-radius:2px;"><div style="width:' . $Width . '%; max-width:100%; height:100%; background:' . $Color . '; border-radius:2px;"></div></div>';
 	}
+
+	// Convert string to Unix time
+	$unixTime = strtotime($AccountLastLogonTime);
+	// Pass the new date format as a string and the original date in Unix time
+	$AccountLastLogonTime = date('Y-m-d H:i:s', $unixTime);
 
 	PrintPropertyRow("Last logon time", $AccountLastLogonTime);
 }
@@ -217,7 +222,7 @@ if ($AccountId > 0) {
 		echo '                <tr>
                   <td><a href="?page=account_externalaccount&csrftoken=' . $csrftoken . '&action=edit&domainid=' . $DomainId . '&accountid=' . $AccountId . '&faid=' . $FAID . '">' . $Name . '</a></td>
                   <td><a href="?page=account_externalaccount&csrftoken=' . $csrftoken . '&action=edit&domainid=' . $DomainId . '&accountid=' . $AccountId . '&faid=' . $FAID . '">' . $ServerAddress . '</a></td>
-                  <td><a href="?page=background_account_externalaccount_save&csrftoken=' . $csrftoken . '&action=downloadnow&domainid=' . $DomainId . '&accountid=' . $AccountId . '&faid=' . $FAID . '" class="download">' . $str_downloadnow . '</a></td>
+                  <td><a href="?page=background_account_externalaccount_save&csrftoken=' . $csrftoken . '&action=downloadnow&domainid=' . $DomainId . '&accountid=' . $AccountId . '&faid=' . $FAID . '"><i data-feather="download"></i></a></td>
                   <td><a href="#" onclick="return Confirm(\'' . $str_confirm . ' <b>' . $Name . '</b>:\',\'' . $str_yes . '\',\'' . $str_no . '\',\'?page=background_account_externalaccount_save&action=delete&domainid=' . $DomainId . '&accountid=' . $AccountId . '&faid=' . $FAID . '&csrftoken=' . $csrftoken . '\');" class="delete" title="' . $str_delete . '">' . $str_delete . '</a></td>
                 </tr>' . PHP_EOL;
 	}
@@ -264,9 +269,9 @@ if (GetHasRuleAccess($DomainId, $AccountId)) {
 
 			$move = '';
 			if ($i > 0)
-				$move = $move . '<a href="?page=background_rule_save&action=move&savetype=ruleup&domainid=' . $DomainId . '&accountid=' . $AccountId . '&ruleid=' . $ruleid . '&csrftoken=' . $csrftoken . '" class="arrow up">Up</a>';
+				$move = $move . '<a href="?page=background_rule_save&action=move&savetype=ruleup&domainid=' . $DomainId . '&accountid=' . $AccountId . '&ruleid=' . $ruleid . '&csrftoken=' . $csrftoken . '"><i data-feather="arrow-up"></i></a>';
 			if ($i < $Count-1)
-				$move = $move . '<a href="?page=background_rule_save&action=move&savetype=ruledown&domainid=' . $DomainId . '&accountid=' . $AccountId . '&ruleid=' . $ruleid . '&csrftoken=' . $csrftoken . '" class="arrow down">Down</a>';
+				$move = $move . '<a href="?page=background_rule_save&action=move&savetype=ruledown&domainid=' . $DomainId . '&accountid=' . $AccountId . '&ruleid=' . $ruleid . '&csrftoken=' . $csrftoken . '"><i data-feather="arrow-down"></i></a>';
 
 			echo '                <tr>
                   <td><a href="?page=rule&action=edit&domainid=' . $DomainId . '&accountid=' . $AccountId . '&ruleid=' . $ruleid . '">' . $rulename . '</a></td>

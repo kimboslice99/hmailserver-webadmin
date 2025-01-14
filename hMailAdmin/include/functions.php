@@ -137,7 +137,7 @@ function  PrintPropertyRow($caption, $value) {
 	global $obLanguage;
 	$caption = $obLanguage->String($caption);
 
-	echo '          <p>' . $caption . '</p><b>' . $value . '</b>' . PHP_EOL;
+	echo '          <p>' . Translate($caption) . '</p><b>' . $value . '</b>' . PHP_EOL;
 }
 
 function PrintPropertyEditRow($name, $caption, $value, $length = 255, $checktype = null, $class = null) {
@@ -172,7 +172,7 @@ function PrintCheckboxRow($name, $caption, $checked, $disabled = false) {
 	$checked_text = hmailCheckedIf1($checked);
 
 	$disabledstr = "";
-	if ($disabled){
+	if ($disabled) {
 		$disabledstr = " disabled ";
 	}
 
@@ -341,10 +341,45 @@ function GeoIp($ip) {
 	$regex = '/(127\.0\.0\.1)|^(::1)$|^(10\.)|^(192\.168\.)|^(169\.254\.)|^(172\.(1[6-9]|2[0-9]|3[0-1]))/';
 	if (preg_match($regex, $ip)) return Translate('Local IP range');
 
-	$json = file_get_contents('http://ip-api.com/json/' . $ip);
-	$parsed = json_decode($json);
+	set_error_handler(function() { /* Ignore errors */ });
 
-	if(!$parsed->countryCode) return Translate('Unknown');
-	return '<p><img src="flags/' . $parsed->countryCode . '.gif" style="margin-right:5px;">' . $parsed->country . '</p>';
+	try {
+		$json = file_get_contents('http://ip-api.com/json/' . $ip . '?fields=country,countryCode');
+		$parsed = json_decode($json);
+		if(!isset($parsed->countryCode)) return Translate('Unknown');
+		return '<p><img src="flags/' . $parsed->countryCode . '.gif" style="margin-right:5px;">' . $parsed->country . '</p>';
+	} catch (Exception $e) {
+		// Handle the error if necessary
+	}
+
+	restore_error_handler();
+}
+
+// Breadcrumbs
+function Breadcrumbs($DomainId = null, $AccountId = null) {
+	if ($DomainId) {
+		global $obBaseApp;
+		$obDomain = $obBaseApp->Domains->ItemByDBID($DomainId);
+		$DomainName = $obDomain->Name;
+		echo '    <div class="breadcrumbs"><a href="?page=domains">' . Translate("Domains") . '</a> &rarr; <a href="?page=domain&action=edit&domainid=' . $DomainId . '">' . $DomainName . '</a>';
+		if ($AccountId) {
+			$obAccount = $obDomain->Accounts->ItemByDBID($AccountId);
+			$AccountAddress = $obAccount->Address;
+			echo ' &rarr; <a href="?page=account&action=edit&domainid=' . $DomainId . '&accountid=' . $AccountId . '">' .$AccountAddress . '</a>';
+
+		}
+		echo '</div>';
+	}
+}
+
+// Get client IP address
+function get_client_ip() {
+	if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+		return $_SERVER['HTTP_CLIENT_IP'];
+	} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+		return $_SERVER['HTTP_X_FORWARDED_FOR'];
+	} else {
+		return $_SERVER['REMOTE_ADDR'];
+	}
 }
 ?>
