@@ -237,7 +237,6 @@ function parse($files) {
 .dmarc-report td.unaligned {background:#f69195;}
 table .hidden:hover {background:none;}
 .dmarc-report table table th, .dmarc-report table table td {text-indent:10px;}
-}
 </style>
     <div class="box large">
       <h2><?php EchoTranslation("DMARC reports") ?> <span>(<?php echo $reports_count ?>)</span></h2>
