@@ -132,7 +132,8 @@ if (array_key_exists('SepSvcLogs', $ini) && $ini['SepSvcLogs'] == "1") {
         return strcmp($timestampA, $timestampB);
     });
     
-    $tempStream = fopen('php://memory', 'r+');
+    $MaxMem = 40 * 1024 * 1024;
+    $tempStream = fopen("php://temp/maxmemory:$MaxMem", 'r+');
     fwrite($tempStream, implode(PHP_EOL, $AllLines));
     rewind($tempStream);
     //file_put_contents($MergedFile, implode(PHP_EOL, $AllLines));
