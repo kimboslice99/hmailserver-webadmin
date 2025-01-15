@@ -103,7 +103,7 @@ if (array_key_exists('SepSvcLogs', $ini) && $ini['SepSvcLogs'] == "1") {
     $Pop3File = $Path . '\\hmailserver_POP3_' . $Filedate . '.log';
     $ErrorFile = $Path . '\\ERROR_hmailserver_' . $Filedate . '.log';
     
-    $SmtpFileParts = $ImapFileParts = $Pop3FileParts = $ErrorFileParts = [];
+    $SmtpFileParts = $ImapFileParts = $Pop3FileParts = $ErrorFileParts = $AllParts = [];
     if (file_exists($SmtpFile)) {
         $SmtpFileParts = file($SmtpFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     }
@@ -116,9 +116,12 @@ if (array_key_exists('SepSvcLogs', $ini) && $ini['SepSvcLogs'] == "1") {
     if (file_exists($ErrorFile)) {
         $ErrorFileParts = file($ErrorFile, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
     }
+    if(file_exists($Filename)) {
+        $AllParts = file($Filename, FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
+    }
     
     // Merge all parts into a single array
-    $AllLines = array_merge($SmtpFileParts, $ImapFileParts, $Pop3FileParts, $ErrorFileParts);
+    $AllLines = array_merge($SmtpFileParts, $ImapFileParts, $Pop3FileParts, $ErrorFileParts, $AllParts);
     
     // Sort lines by timestamp
     usort($AllLines, function ($lineA, $lineB) {
@@ -131,7 +134,6 @@ if (array_key_exists('SepSvcLogs', $ini) && $ini['SepSvcLogs'] == "1") {
         
         return strcmp($timestampA, $timestampB);
     });
-    
     $MaxMem = 40 * 1024 * 1024;
     $tempStream = fopen("php://temp/maxmemory:$MaxMem", 'r+');
     fwrite($tempStream, implode(PHP_EOL, $AllLines));
